@@ -16,16 +16,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'oidc-iat-demo'`, () => {
+  it(`should have as title 'oidc-iat-debugger'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('oidc-iat-demo');
+    expect(app.title).toEqual('oidc-iat-debugger');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('oidc-iat-demo app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('oidc-iat-debugger app is running!');
   });
 });
