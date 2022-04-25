@@ -1,19 +1,21 @@
-import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { base64ToBase64url, base64urlToBase64, decodeBase64url, encodeBase64url } from '@jonasprimbs/byte-array-converter';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   private _iatHeaderString: string = '{"alg":"ES384","typ":"JWT"}';
-  private _iatPayloadString: string = '{"iss":"https://jonasprimbs.de/","sub":"1234567890","name":"John Doe","iat":123456789}';
+  private _iatPayloadString: string = '{"iss":"http://imera-auth-test.medizin.uni-tuebingen.de/auth/realms/sstep-kiz","sub":"1234567890","name":"John Doe","iat":123456789}';
   private _iatSignatureString: string = '';
 
   iatSignatureValid?: Promise<boolean | undefined>;
 
-  private _messagePayload: string = 'Sample message';
+  private _messagePayload: string = '';
   private _messageSignature: string = '';
   messageSignatureValid?: Promise<boolean | undefined>;
 
@@ -22,9 +24,14 @@ export class AppComponent {
   opPublicKey?: JsonWebKey;
   opPrivateKey?: JsonWebKey;
 
-  constructor() {
-    this.generateOpKeyPair();
-    this.generateCnfKeyPair();
+  constructor(private readonly http: HttpClient) { }
+
+  async ngOnInit(): Promise<void> {
+    await Promise.all([
+      this.generateOpKeyPair(),
+      this.generateCnfKeyPair(),
+    ]);
+    this.messagePayload = 'Sample message';
   }
 
   get iatSignatureString(): string {

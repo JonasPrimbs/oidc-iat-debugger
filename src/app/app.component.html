@@ -28,8 +28,6 @@
       <p class="signature-result">
         <span *ngIf="iatSignatureValid">Signature valid: {{ iatSignatureValid | async }}</span>
         <span *ngIf="iatSignatureValid === undefined">Signature not checked</span>
-
-        <button mat-button [disabled]="!opPublicKey" (click)="verifyIatSignature()">Verify</button>
       </p>
 
       <!-- Advanced Options for ID Assertion Token -->
@@ -69,9 +67,6 @@
             <mat-icon>close</mat-icon>
           </button>
         </mat-form-field>
-
-        <!-- Sign IAT Button -->
-        <button mat-button [disabled]="!opPublicKey" (click)="signIat()">Sign</button>
       </mat-expansion-panel>
     </mat-card-content>
   </mat-card>
@@ -84,7 +79,9 @@
 
     <mat-card-content>
       <!-- URI of OpenID Provider -->
-      <a [href]="issuerUri" target="_blank">{{ issuerUri }}</a>
+      <p>
+        <a [href]="issuerUri" target="_blank">{{ issuerUri }}</a>
+      </p>
 
       <br>
 
@@ -190,8 +187,6 @@
       <p class="signature-result">
         <span *ngIf="messageSignatureValid">Signature valid: {{ messageSignatureValid | async }}</span>
         <span *ngIf="messageSignatureValid === undefined">Signature not checked</span>
-
-        <button mat-button [disabled]="!cnfPublicKey" (click)="verifyMessageSignature()">Verify</button>
       </p>
 
       <!-- Advanced Options for Message -->
@@ -220,8 +215,6 @@
             <mat-icon>close</mat-icon>
           </button>
         </mat-form-field>
-        <!-- Generate Message Signature Button -->
-        <button mat-button [disabled]="!cnfPrivateKey" (click)="signMessage()">Sign</button>
       </mat-expansion-panel>
     </mat-card-content>
   </mat-card>

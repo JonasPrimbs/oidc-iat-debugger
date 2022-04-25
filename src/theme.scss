@@ -1,0 +1,41 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+body {
+  @extend .mat-app-background;
+  $light-theme: mat.define-light-theme((
+    color: (
+      primary: mat.define-palette(mat.$blue-grey-palette, 900),
+      accent: mat.define-palette(mat.$green-palette, A400, A100, A700),
+      warn: mat.define-palette(mat.$red-palette, A200, A100, A700),
+    ),
+  ));
+  @include mat.all-component-themes($light-theme);
+  $fg_palette:map-get($light-theme, foreground);
+  $fg:map-get($fg_palette, text);
+
+  a {
+    color: #{$fg};
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    @extend .mat-app-background;
+    $dark-theme: mat.define-dark-theme((
+      color: (
+        primary: mat.define-palette(mat.$blue-grey-palette, 900),
+        accent: mat.define-palette(mat.$green-palette, A400, A100, A700),
+        warn: mat.define-palette(mat.$red-palette, A200, A100, A700),
+      ),
+    ));
+    @include mat.all-component-themes($dark-theme);
+    $fg_palette:map-get($dark-theme, foreground);
+    $fg:map-get($fg_palette, text);
+  
+    a {
+      color: #{$fg};
+    }
+  }
+}
